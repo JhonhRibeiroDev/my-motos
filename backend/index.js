@@ -2,7 +2,27 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const sqlite3 = require('sqlite3').verbose();
 const fs = require('fs');
+const cors = require('cors');
 const path = require('path');
+const app = express();
+const port = 3000;
+
+
+
+//PERMITIR DETERMINADAS URLS
+const corsOptions = {
+    origin: ['http://localhost:3000', 'http://localhost:5173'],
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  };
+
+  
+  app.use(cors(corsOptions));
+  
+
+
+
+
 
 // Defina o caminho do banco de dados
 const dbPath = path.resolve(__dirname, 'database.sqlite');
@@ -108,8 +128,6 @@ if (!dbExists) {
     });
 }
 
-const app = express();
-const port = 3000;
 
 app.use(bodyParser.json());
 
